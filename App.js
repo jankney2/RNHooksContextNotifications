@@ -1,114 +1,66 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
 
-import React, {Fragment} from 'react';
+import {Provider as PaperProvider, DefaultTheme, Button} from 'react-native-paper'
+import Adder from './components/Adder'
+import React from 'react';
+import Todo from './components/Todo'
 import {
   SafeAreaView,
   StyleSheet,
-  ScrollView,
-  View,
+  FlatList,
   Text,
-  StatusBar,
 } from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const theme={
+...DefaultTheme, 
+colors: {
+  primary:'tomato', 
+  accent:'yellow'
+}
+}
+let id=0
+const toDoArr=[
+  {
+  text:`i'm a todo!`, 
+  id:++id
+},
+  {
+  text:`i'm a todo too!`, 
+  id:++id
+},
+  {
+  text:`(dj khaled voice) ANOTHA ONE!`, 
+  id:++id
+},
+]
 
 const App = () => {
   return (
-    <Fragment>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </Fragment>
+    // <PaperProvider theme={theme}>
+      
+
+    <SafeAreaView style={styles.contain}>
+      <Adder />
+
+      <FlatList
+      data={toDoArr}
+      renderItem={({item})=>{
+        <Text>{item.text}</Text>
+      }}
+      keyExtractor={item=>item.id.toString()}
+      />
+    </SafeAreaView>
+    // </PaperProvider>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
+contain:{
+  flex:1, 
+  justifyContent:'center'
+}, 
+text: {
+  textAlign:'center'
+}
 });
 
 export default App;
